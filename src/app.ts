@@ -27,6 +27,8 @@ const app: FastifyPluginAsync<AppOptions> = async (
     dir: join(__dirname, "routes"),
     options: opts,
   });
+
+  // google auth
 };
 
 export default app;
