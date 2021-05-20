@@ -11,11 +11,20 @@ generator client {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  email        String   @db.VarChar(255)
-  username     String   @db.VarChar(32)
-  display_name String   @db.VarChar(96)
-  thumbnail    String   @db.VarChar(255)
-  created_at   DateTime @default(now())
-  is_certified Boolean  @default(false)
+  id            Int            @id @default(autoincrement())
+  email         String         @db.VarChar(255)
+  username      String         @db.VarChar(32)
+  display_name  String         @db.VarChar(96)
+  thumbnail     String         @db.VarChar(255)
+  created_at    DateTime       @default(now())
+  is_certified  Boolean        @default(false)
+  SocialAccount SocialAccount?
+}
+
+model SocialAccount {
+  id        Int    @id @default(autoincrement())
+  provider  String @db.VarChar(24)
+  social_id String @db.VarChar(255)
+  userId    Int
+  user      User   @relation(fields: userId, references: id)
 }
