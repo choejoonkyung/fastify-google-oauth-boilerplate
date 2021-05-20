@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^2.23.0",
     "dotenv": "^9.0.2",
     "fastify": "^3.0.0",
     "fastify-autoload": "^3.3.1",
@@ -30,6 +31,7 @@
     "concurrently": "^6.0.0",
     "cross-env": "^7.0.3",
     "fastify-tsconfig": "^1.0.1",
+    "prisma": "^2.23.0",
     "tap": "^14.11.0",
     "typescript": "^4.1.3"
   }

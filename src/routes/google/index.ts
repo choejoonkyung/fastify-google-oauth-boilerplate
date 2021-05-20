@@ -1,7 +1,10 @@
 import { FastifyPluginAsync } from "fastify";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
-  fastify.post(
+  fastify.get(
     "/auth",
     {
       schema: {
@@ -10,6 +13,11 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
       },
     },
     async function (request, reply) {
+      await prisma.user.create({
+        data: {
+          name: "Jk",
+        },
+      });
       return {
         google: "auth",
       };
