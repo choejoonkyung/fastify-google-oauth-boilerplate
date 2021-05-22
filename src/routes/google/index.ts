@@ -12,14 +12,15 @@ const google: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
       const { access_token: accessToken } = request.body;
       try {
         const profile = await getGoogleProfile(accessToken);
-        const socialAccount = await prisma.socialAccount.findFirst({
+        const exists = await prisma.socialAccount.findFirst({
           where: {
             provider: "google",
             social_id: profile.socialId,
           },
         });
+        // send
         reply.send({
-          exists: !!socialAccount,
+          exists: !!exists,
         });
       } catch (e) {
         reply.status(401).send({
@@ -50,12 +51,29 @@ const google: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
         if (socialAccount) {
           // TODO: genrate access Token
           reply.send({
-            user: null,
+            user: socialAccount.user,
             accessToken: "",
           });
+        } else {
+          // create socialaccount
+          const user = await prisma.socialAccount.create({
+            data: {
+              user: {
+                create: {
+                  email: profile.email,
+                  display_name: profile.displayName,
+                  thumbnail: profile.photo,
+                },
+              },
+              social_id: profile.socialId,
+              provider: "google",
+            },
+          });
+          reply.send({
+            user,
+            access_token: "",
+          });
         }
-
-        // TODO: create user
       } catch (e) {
         reply.status(401).send({
           code: 401,
