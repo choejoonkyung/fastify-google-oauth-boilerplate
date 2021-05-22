@@ -2,6 +2,7 @@ import { FastifyPluginAsync } from "fastify";
 import getGoogleProfile from "../../lib/google/getGoogleProfile";
 import GoogleAuthBody from "../../types/google/authBody";
 import { PrismaClient } from "@prisma/client";
+import { generateToken } from "../../lib/token/jwt";
 const prisma = new PrismaClient();
 
 const google: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
@@ -31,7 +32,7 @@ const google: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     }
   );
 
-  // login
+  // login and register
   fastify.post<{ Body: GoogleAuthBody }>(
     "/auth",
     async function (request, reply) {
@@ -49,10 +50,20 @@ const google: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
         });
 
         if (socialAccount) {
-          // TODO: genrate access Token
+          // genrate access Token
+          const token = await generateToken(
+            {
+              subject: "accessToken",
+              userId: socialAccount.user.id,
+            },
+            {
+              expiresIn: "15d",
+            }
+          );
+
           reply.send({
             user: socialAccount.user,
-            accessToken: "",
+            accessToken: token,
           });
         } else {
           // create socialaccount
@@ -69,9 +80,21 @@ const google: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
               provider: "google",
             },
           });
+
+          // genrate access Token
+          const token = await generateToken(
+            {
+              subject: "accessToken",
+              userId: user.id,
+            },
+            {
+              expiresIn: "15d",
+            }
+          );
+
           reply.send({
             user,
-            access_token: "",
+            access_token: token,
           });
         }
       } catch (e) {
