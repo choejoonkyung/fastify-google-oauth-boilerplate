@@ -61,9 +61,14 @@ const google: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
             }
           );
 
+          reply.setCookie("access_Token", token, {
+            path: "/",
+            httpOnly: true,
+            maxAge: 60 * 60 * 24 * 15,
+          });
+
           reply.send({
             user: socialAccount.user,
-            accessToken: token,
           });
         } else {
           // create socialaccount
@@ -92,9 +97,14 @@ const google: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
             }
           );
 
+          reply.setCookie("access_Token", token, {
+            path: "/",
+            httpOnly: true,
+            maxAge: 60 * 60 * 24 * 15,
+          });
+
           reply.send({
             user,
-            access_token: token,
           });
         }
       } catch (e) {

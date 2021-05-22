@@ -7,10 +7,11 @@ export async function generateToken(
 ) {
   if (!JWT_SECRET_KEY) throw new Error("환경 변수에 시크릿 키가 없습니다.");
 
-  const promise = new Promise((res, rej) => {
+  const promise = new Promise<string>((res, rej) => {
     jwt.sign(paylaod, JWT_SECRET_KEY, options, (err, token) => {
       if (err) return rej(err);
-      res(token);
+      if (token) return res(token);
+      return rej(new Error("token sign error"));
     });
   });
 
@@ -23,7 +24,7 @@ export async function decodeToken<T>(token: string) {
   const promise = new Promise<T>((res, rej) => {
     const decoded = jwt.verify(token, JWT_SECRET_KEY);
     if (decoded) return res(decoded as any);
-    return rej("decoded error");
+    return rej(new Error("token decoded error"));
   });
 
   return promise;
