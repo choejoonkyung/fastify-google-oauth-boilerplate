@@ -25,7 +25,7 @@ const callback: FastifyPluginCallback = async (fastify, opts, done) => {
         id: decoded.userId,
       };
     } catch (e) {
-      reply.status(401).send(new Error("토큰이 유효하지 않습니다."));
+      // reply.status(401).send(new Error("토큰이 유효하지 않습니다."));
     }
   });
 
