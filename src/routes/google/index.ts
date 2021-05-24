@@ -61,7 +61,7 @@ const google: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
             }
           );
 
-          reply.setCookie("access_Token", token, {
+          reply.setCookie("access_token", token, {
             path: "/",
             httpOnly: true,
             maxAge: 60 * 60 * 24 * 15,
@@ -97,7 +97,7 @@ const google: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
             }
           );
 
-          reply.setCookie("access_Token", token, {
+          reply.setCookie("access_token", token, {
             path: "/",
             httpOnly: true,
             maxAge: 60 * 60 * 24 * 15,

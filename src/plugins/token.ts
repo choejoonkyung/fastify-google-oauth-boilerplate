@@ -15,7 +15,7 @@ type UserTokenDecoded = {
   exp: number;
 };
 
-const token: FastifyPluginCallback = async (fastify, opts, done) => {
+const callback: FastifyPluginCallback = async (fastify, opts, done) => {
   fastify.decorateRequest("user", null);
   fastify.addHook("preHandler", async (request, reply) => {
     const accessToken: string | undefined = request.cookies.access_token;
@@ -24,11 +24,18 @@ const token: FastifyPluginCallback = async (fastify, opts, done) => {
       request.user = {
         id: decoded.userId,
       };
-    } catch (e) {}
+    } catch (e) {
+      reply.status(401).send(new Error("토큰이 유효하지 않습니다."));
+    }
   });
+
   done();
 };
 
+const jwtPlugin = fp(callback, {
+  name: "jwtPlugin",
+});
+
 export default fp(async (fastify, opts) => {
-  fastify.register(token);
+  fastify.register(jwtPlugin);
 });
