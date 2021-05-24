@@ -26,7 +26,7 @@ const google: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
       } catch (e) {
         reply.status(401).send({
           code: 401,
-          msg: "잘못된 구글 엑세스 토큰입니다.",
+          msg: "잘못된 구글 엑세스 토큰 또는 유저를 찾을 수 없음.",
         });
       }
     }
@@ -110,7 +110,7 @@ const google: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
       } catch (e) {
         reply.status(401).send({
           code: 401,
-          msg: "잘못된 구글 엑세스 토큰입니다.",
+          msg: "잘못된 구글 엑세스 토큰 또는 유저를 찾을 수 없음",
         });
       }
     }
