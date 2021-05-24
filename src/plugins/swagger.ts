@@ -34,7 +34,10 @@ export default fp(async (fastify, opts) => {
           in: "header",
         },
       },
-      tags: [{ name: "Google oauth", description: "구글 로그인 관련" }],
+      tags: [
+        { name: "Google oauth", description: "구글 oauth 관련" },
+        { name: "Users", description: "유저 정보 관련" },
+      ],
     },
     uiConfig: {
       docExpansion: "full",

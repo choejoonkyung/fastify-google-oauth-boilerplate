@@ -1,0 +1,14 @@
+{
+    "body" : {
+      "title": "구글 엑세스 토큰",
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string"
+        }
+      },
+      "required": ["access_token"]
+    },
+    "tags": ["Google oauth"],
+    "description": "구글 회원 가입 여부"
+  }

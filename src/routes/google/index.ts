@@ -3,12 +3,18 @@ import getGoogleProfile from "../../lib/google/getGoogleProfile";
 import GoogleAuthBody from "../../types/google/authBody";
 import { PrismaClient } from "@prisma/client";
 import { generateToken } from "../../lib/token/jwt";
+import GoogleAuthSchema from "../../schemas/google/auth.json";
+import GoogleAuthCheck from "../../schemas/google/check.json";
+
 const prisma = new PrismaClient();
 
 const google: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   // registerd check
   fastify.post<{ Body: GoogleAuthBody }>(
     "/check",
+    {
+      schema: GoogleAuthCheck,
+    },
     async function (request, reply) {
       const { access_token: accessToken } = request.body;
       try {
@@ -35,6 +41,9 @@ const google: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   // login and register
   fastify.post<{ Body: GoogleAuthBody }>(
     "/auth",
+    {
+      schema: GoogleAuthSchema,
+    },
     async function (request, reply) {
       const { access_token: accessToken } = request.body;
       try {
