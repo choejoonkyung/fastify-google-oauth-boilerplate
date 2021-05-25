@@ -17,6 +17,8 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^2.23.0",
+    "@types/aws-sdk": "^2.7.0",
+    "aws-sdk": "^2.913.0",
     "dotenv": "^9.0.2",
     "fastify": "^3.0.0",
     "fastify-autoload": "^3.3.1",
