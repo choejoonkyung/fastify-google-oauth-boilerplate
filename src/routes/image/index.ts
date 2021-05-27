@@ -1,6 +1,6 @@
 import { FastifyPluginAsync } from "fastify";
 import ImageUploadSchema from "../../schemas/images/upload.json";
-import upload from "../../lib/aws/upload";
+// import upload from "../../lib/aws/upload";
 
 const image: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.post(
@@ -9,8 +9,9 @@ const image: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
       schema: ImageUploadSchema,
     },
     async function (request, reply) {
-      console.log(request);
-      upload.single("image");
+      console.log(request.file.name);
+      reply.send({ connect: true });
+      // upload.single("image");
     }
   );
 };
