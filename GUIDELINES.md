@@ -30,6 +30,14 @@ BUCKET_NAME=[AWS S3의 BUCKET_NAME]
 REGION=ap-[AWS S3의 REGION]
 ```
 
+### AWS 사용자 설정
+
+aws-cli를 통해 사용자 설정을 해야합니다. iam을 통해 사용자 등록 후 진행합니다.
+
+```
+aws-cli configure
+```
+
 ### 빌드
 
 프로젝트를 시작하기 위해 루트 디렉토리에서 다음 명령어를 실행합니다.
